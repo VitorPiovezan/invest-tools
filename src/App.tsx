@@ -10,7 +10,7 @@ import BlogPostPage from './pages/BlogPostPage';
 
 export default function App() {
   return (
-    <BrowserRouter basename="/invest-tools">
+    <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
