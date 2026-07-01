@@ -7,6 +7,7 @@ import InvestorPage from './pages/InvestorPage';
 import MarketPage from './pages/MarketPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
+import ScoreGainWorldPage from './pages/ScoreGainWorldPage';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="minha-carteira" element={<PortfolioPage />} />
           <Route path="seja-um-investidor" element={<InvestorPage />} />
           <Route path="panorama-de-mercado" element={<MarketPage />} />
+          <Route path="score-gain-world" element={<ScoreGainWorldPage />} />
           <Route path="blog" element={<BlogPage />} />
           <Route path="blog/:slug" element={<BlogPostPage />} />
         </Route>

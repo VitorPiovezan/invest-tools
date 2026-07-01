@@ -1,0 +1,103 @@
+const
+    VALE  = Asset("VALE3",  feedBovespa);
+    PETR4 = Asset("PETR4",  feedBovespa);
+    PETR3 = Asset("PETR3",  feedBovespa);
+    ITUB4 = Asset("ITUB4",  feedBovespa);
+    BBDC4 = Asset("BBDC4",  feedBovespa);
+    BBAS3 = Asset("BBAS3",  feedBovespa);
+
+input
+    PesoVale(18);
+    PesoPetr4(18);
+    PesoPetr3(8);
+    PesoItub4(10);
+    PesoBbdc4(7);
+    PesoBbas3(6);
+
+var
+    VarVale  : Float;
+    VarPetr4 : Float;
+    VarPetr3 : Float;
+    VarItub4 : Float;
+    VarBbdc4 : Float;
+    VarBbas3 : Float;
+
+    Score : Float;
+
+begin
+
+    //=========================
+    // VARIAÇÃO % DO DIA
+    //=========================
+
+    VarVale  := ((VALE.Close  - VALE.Open ) / VALE.Open ) * 100;
+    VarPetr4 := ((PETR4.Close - PETR4.Open) / PETR4.Open) * 100;
+    VarPetr3 := ((PETR3.Close - PETR3.Open) / PETR3.Open) * 100;
+    VarItub4 := ((ITUB4.Close - ITUB4.Open) / ITUB4.Open) * 100;
+    VarBbdc4 := ((BBDC4.Close - BBDC4.Open) / BBDC4.Open) * 100;
+    VarBbas3 := ((BBAS3.Close - BBAS3.Open) / BBAS3.Open) * 100;
+
+    //=========================
+    // SCORE
+    //=========================
+
+    Score :=
+        (VarVale  * PesoVale)  +
+        (VarPetr4 * PesoPetr4) +
+        (VarPetr3 * PesoPetr3) +
+        (VarItub4 * PesoItub4) +
+        (VarBbdc4 * PesoBbdc4) +
+        (VarBbas3 * PesoBbas3);
+
+    //=========================
+    // PLOT
+    //=========================
+
+    Plot(Score);
+
+    //=========================
+    // CLASSIFICAÇÃO
+    //=========================
+
+    if Score >= 80 then
+    begin
+        SetPlotColor(1, clLime);
+        PaintBar(clLime);
+    end
+    else
+    if Score >= 40 then
+    begin
+        SetPlotColor(1, clGreen);
+        PaintBar(clGreen);
+    end
+    else
+    if Score >= 10 then
+    begin
+        SetPlotColor(1, clOlive);
+        PaintBar(clOlive);
+    end
+    else
+    if Score > -10 then
+    begin
+        SetPlotColor(1, clGray);
+        PaintBar(clGray);
+    end
+    else
+    if Score > -40 then
+    begin
+        SetPlotColor(1, clOrange);
+        PaintBar(clOrange);
+    end
+    else
+    if Score > -80 then
+    begin
+        SetPlotColor(1, clRed);
+        PaintBar(clRed);
+    end
+    else
+    begin
+        SetPlotColor(1, clMaroon);
+        PaintBar(clMaroon);
+    end;
+
+end;

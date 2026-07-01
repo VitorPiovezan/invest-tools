@@ -15,21 +15,11 @@ export default function Layout() {
       <header className="border-b border-border/50 backdrop-blur-sm bg-[#0a0a0a]/80 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center group-hover:bg-brand-dark transition-colors">
-              <svg
-                className="w-5 h-5 text-black"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-            </div>
+            <img
+              src="/images/icone.png"
+              alt="Otávio Brandão"
+              className="w-9 h-9 rounded-xl object-cover group-hover:opacity-90 transition-opacity"
+            />
             <span className="text-lg font-semibold text-text-primary">
               Otávio Brandão
             </span>

@@ -1,0 +1,119 @@
+const
+    VALE3 = Asset("VALE3", feedBovespa);
+    ITUB4 = Asset("ITUB4", feedBovespa);
+    PETR4 = Asset("PETR4", feedBovespa);
+    PETR3 = Asset("PETR3", feedBovespa);
+    AXIA3 = Asset("AXIA3", feedBovespa);
+    BBDC4 = Asset("BBDC4", feedBovespa);
+    WDO   = Asset("WDOFUT", feedBMF);
+
+input
+    PesoVale3(12.4);
+    PesoItub4(8.3);
+    PesoPetr4(7.6);
+    PesoPetr3(4.3);
+    PesoAxia3(4.0);
+    PesoBbdc4(3.7);
+    PesoWdo(10.0);
+
+    LimForteCompra(80);
+    LimCompra(40);
+    LimCompraFraca(10);
+    LimNeutro(-10);
+    LimVendaFraca(-40);
+    LimVenda(-80);
+
+var
+    VarVale3 : Float;
+    VarItub4 : Float;
+    VarPetr4 : Float;
+    VarPetr3 : Float;
+    VarAxia3 : Float;
+    VarBbdc4 : Float;
+    VarWdo   : Float;
+
+    Score : Float;
+
+begin
+
+    //=========================
+    // VARIAÇÃO % DO DIA
+    //=========================
+
+    VarVale3 := ((VALE3.Close - VALE3.Open) / VALE3.Open) * 100;
+    VarItub4 := ((ITUB4.Close - ITUB4.Open) / ITUB4.Open) * 100;
+    VarPetr4 := ((PETR4.Close - PETR4.Open) / PETR4.Open) * 100;
+    VarPetr3 := ((PETR3.Close - PETR3.Open) / PETR3.Open) * 100;
+    VarAxia3 := ((AXIA3.Close - AXIA3.Open) / AXIA3.Open) * 100;
+    VarBbdc4 := ((BBDC4.Close - BBDC4.Open) / BBDC4.Open) * 100;
+    VarWdo   := ((WDO.Close   - WDO.Open)   / WDO.Open)   * 100;
+
+    //=========================
+    // SCORE (Bloco 1 - Ações)
+    // WDO invertido: dólar sobe = pressão vendedora
+    //=========================
+
+    Score :=
+        (VarVale3 * PesoVale3) +
+        (VarItub4 * PesoItub4) +
+        (VarPetr4 * PesoPetr4) +
+        (VarPetr3 * PesoPetr3) +
+        (VarAxia3 * PesoAxia3) +
+        (VarBbdc4 * PesoBbdc4) -
+        (VarWdo   * PesoWdo);
+
+    //=========================
+    // PLOT
+    //=========================
+
+    Plot(Score);
+
+    //=========================
+    // COLORAÇÃO POR FORÇA
+    // Verde  = compra  (mais forte = mais claro)
+    // Amarelo = neutro
+    // Vermelho = venda  (mais forte = mais escuro)
+    //=========================
+
+    if Score >= LimForteCompra then
+    begin
+        SetPlotColor(1, clLime);
+        PaintBar(clLime);
+    end
+    else
+    if Score >= LimCompra then
+    begin
+        SetPlotColor(1, clGreen);
+        PaintBar(clGreen);
+    end
+    else
+    if Score >= LimCompraFraca then
+    begin
+        SetPlotColor(1, clOlive);
+        PaintBar(clOlive);
+    end
+    else
+    if Score > LimNeutro then
+    begin
+        SetPlotColor(1, clYellow);
+        PaintBar(clYellow);
+    end
+    else
+    if Score > LimVendaFraca then
+    begin
+        SetPlotColor(1, clOrange);
+        PaintBar(clOrange);
+    end
+    else
+    if Score > LimVenda then
+    begin
+        SetPlotColor(1, clRed);
+        PaintBar(clRed);
+    end
+    else
+    begin
+        SetPlotColor(1, clMaroon);
+        PaintBar(clMaroon);
+    end;
+
+end;
